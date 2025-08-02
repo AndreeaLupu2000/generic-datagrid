@@ -1,0 +1,60 @@
+services:
+  server:
+    build:
+      context: ./server
+      args:
+        - DB_HOST=db
+        - DB_USER=${MYSQL_USER:-appuser}
+        - DB_PASSWORD=${MYSQL_PASSWORD:-carsDB}
+        - DB_NAME=${MYSQL_DATABASE:-carsDB}
+        - DB_PORT=3306
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=${MYSQL_USER:-appuser}
+      - DB_PASSWORD=${MYSQL_PASSWORD:-carsDB}
+      - DB_NAME=${MYSQL_DATABASE:-carsDB}
+      - DB_PORT=3306
+
+  client:
+    build:
+      context: ./client
+      args:
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:8080/api}
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8080/api}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+  db:
+    build:
+      context: ./database
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-rootpassword}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-carsDB}
+      - MYSQL_USER=${MYSQL_USER:-appuser}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-carsDB}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
