@@ -1,2 +1,11 @@
-# generic-datagrid
-Generic DataGrid
+# Generic DataGrid
+
+
+Video:
+
+Presentation:
+
+## Project Stucture
+
+
+## Technical Solution
