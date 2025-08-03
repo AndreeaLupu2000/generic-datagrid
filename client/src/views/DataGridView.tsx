@@ -114,6 +114,9 @@ const DataGridView = () => {
     };
 
     setColumns([...formattedColumns, actionsColumn]);
+    
+    // Fetch data immediately after setting up the schema and table name
+    await fetchData(firstTableName);
   };
 
   // Fetch data
@@ -152,19 +155,14 @@ const DataGridView = () => {
     fetchData(tableName);
   };
 
-  // Fetch schema on mount
+  // Fetch schema and data on mount
   useEffect(() => {
     fetchSchema();
-  }, []);
-
-  // Fetch data on mount
-  useEffect(() => {
-    const tableName = getTableName();
-    if (tableName) fetchData(tableName);
+    console.log("fetchSchema");
   }, []);
 
   return (
-    <div style={{ height: 700, width: '100%', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ height: 1000, width: '100%', display: 'flex', flexDirection: 'column' }}>
       <FilterComponent
         columns={columns.filter(col => col.field !== 'actions')}
         onApplyFilter={handleApplyFilter}
