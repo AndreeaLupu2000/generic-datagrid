@@ -7,9 +7,13 @@ A full-stack web application featuring a generic DataGrid component built with R
 
 ## Demo Materials
 
-**Video Demo:** 
 
-**Presentation:** 
+### Video
+ [Link to Demo Video](https://youtu.be/dAOVxGVYEno)
+
+### Presentation
+[Link to Presentation](https://drive.google.com/file/d/1bD8isc6VyXLU0LT_puEA1EXecz0wayQn/view?usp=drive_link)
+
 
 ## Features
 
